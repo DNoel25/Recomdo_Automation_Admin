@@ -45,4 +45,5 @@ class ManualSuggestionsPage:
         delete_buttons = self.driver.find_elements(*Locators.DELETE_BUTTON)
         delete_buttons[row_index].click()
 
+    def my name
     
