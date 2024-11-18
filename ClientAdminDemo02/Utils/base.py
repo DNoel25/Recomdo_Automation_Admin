@@ -1,25 +1,27 @@
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 import pytest
-
-
 from Pages.login_page import LoginPage
 
-@pytest.mark.usefixtures("setup")
 class BaseTest:
-    pass
+    driver = None
 
-class BaseTest:
-    def setup_method(self):
+    @classmethod
+    def setup_class(cls):
         driver_path = r"C:\Users\neosolax\Downloads\chromedriver-win64 (1)\chromedriver-win64\chromedriver.exe"
         service = Service(driver_path)
-        self.driver = webdriver.Chrome(service=service)
-        self.driver.get("https://demoapi2.recomdo.ai/client-admin")
-        self.driver.maximize_window()
-        login_page = LoginPage(self.driver) 
-        login_page.login("abans_client", "Porsche9000#")
+        cls.driver = webdriver.Chrome(service=service)
+        cls.driver.get("https://demoapi1.recomdo.ai/client-admin")
+        cls.driver.maximize_window()
 
-    def teardown_method(self):
-        self.driver.quit()
+        # Perform login once
+        login_page = LoginPage(cls.driver)
+        login_page.login("NewKiddoz", "jtys12@")
+        print("Login successful and setup complete.")
 
-
+    @classmethod
+    def teardown_class(cls):
+        # Quit the driver once after all tests
+        if cls.driver:
+            cls.driver.quit()
+            print("Browser closed and teardown complete.")
