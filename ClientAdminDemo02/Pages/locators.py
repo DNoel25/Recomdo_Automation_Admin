@@ -12,9 +12,9 @@ class Locators:
     SHOW_ENTRIES_DROPDOWN = ((By.XPATH, "//select[@name='SuggestionTable_length' and @aria-controls='SuggestionTable']"))  # Dropdown for entries shown per page
     SEARCH_FIELD = (By.ID, "search")  # Search filter field
     GRID_ACTIONS_COLUMN = (By.CSS_SELECTOR, ".grid-actions")  # Actions column in the grid 
-    EDIT_BUTTON = (By.CSS_SELECTOR, ".edit-action")  # Edit button selector in grid
+    EDIT_BUTTON = (By.XPATH, "(//a[@title='Edit'])[1]")  # Edit button selector for the first row in the grid
     DELETE_BUTTON = (By.CSS_SELECTOR, ".delete-action")  # Delete button selector in grid
-    STORE_VIEW_DROPDOWN = ((By.XPATH, "//select"))
+    STORE_VIEW_DROPDOWN = ((By.XPATH, "//select")) 
     # Add New Form Locators
      # Locators for form fields
     ADD_NEW_BUTTON = (By.ID, "add_suggestion")  # Add new manual suggestion button
@@ -24,3 +24,4 @@ class Locators:
     WEIGHT_FIELD = (By.XPATH, "//input[@id='weight_field_id']")  # Update if different
     SAVE_BUTTON = (By.XPATH, "//button[@id='save_suggestion_data']")
     SUCCESS_MESSAGE = (By.XPATH, "//div[contains(@class, 'alert-success')]")
+    #SUCCESS_MESSAGE = (By.XPATH, "//div[contains(@class, 'alert-success') and contains(text(), 'Data Added successfully!')]")
