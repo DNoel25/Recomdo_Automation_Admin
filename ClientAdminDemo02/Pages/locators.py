@@ -5,6 +5,11 @@ from selenium.webdriver.common.by import By
 class Locators:
     SEARCH_RESULTS_MANAGEMENT_MENU = ((By.XPATH, '(//i[contains(@class, "nav-icon fas fa-search")])[1]'))
     MANUAL_SUGGESTION_SUBMODULE = ((By.XPATH, '//a[contains(text(), "Manual Suggestions")]'))
+    # SEARCH_SORT_AND_FILTER = (By.XPATH, '//a[contains(text(), "Advanced Sort & Filter")]')
+    SEARCH_SORT_AND_FILTER = (By.XPATH, '/html/body/div/aside/div/nav/ul/li[4]/ul/li[2]/a')
+
+
+    # SEARCH_SORT_AND_FILTER = ((By.XPATH, '//a[contains(text(), "Advanced Sort & Filter")]'))
     
     #--- Manual Suggestions Page locators ---#
     Heading = (By.TAG_NAME, "h2")
@@ -25,3 +30,11 @@ class Locators:
     SAVE_BUTTON = (By.XPATH, "//button[@id='save_suggestion_data']")
     SUCCESS_MESSAGE = (By.XPATH, "//div[contains(@class, 'alert-success')]")
     #SUCCESS_MESSAGE = (By.XPATH, "//div[contains(@class, 'alert-success') and contains(text(), 'Data Added successfully!')]")
+
+
+    #Locators for Advanced Sort & Filter
+    ASF_STORE_VIEW_DROPDOWN = (By.XPATH, "//select[@name='store_view_select' and @id='store_view_select']")
+    ASF_SORTOPTION_LAYERED = (By.XPATH, "/html/body/div/div[1]/section[2]/div[2]/div/div/div/div[2]/div[2]/section/div/div[1]/div[2]/select")
+    ASF_SAVE_BUTTON = (By.XPATH, "//button[@id='save_attribute_sort']")
+    ASF_SEARCH_TEXT = (By.XPATH, "/html/body/div/div[1]/section[2]/div[2]/div/div/div/div[2]/div[2]/section/div/div[2]/div[2]/div/div[1]/div[1]/input")
+    ASF_UNASSIGNED_LIST = (By.XPATH, "/html/body/div/div[1]/section[2]/div[2]/div/div/div/div[2]/div[2]/section/div/div[2]/div[2]/div/div[1]/div[2]/ul")

@@ -28,3 +28,13 @@ class SideNavigationPage:
         )
         manual_suggestions.click()
         print("Submodule 'Manual Suggestions' clicked")
+    
+    def open_sort_and_filter(self): 
+        # Wait for and click on the "Manual Suggestions" submodule item by unique text or order
+        avanced_sort_and_filter = WebDriverWait(self.driver, 10).until(
+            # EC.element_to_be_clickable((By.XPATH, '//a[contains(text(), "Manual Suggestions")]'))
+            # I pass this using the locatiors class
+            EC.element_to_be_clickable(Locators.SEARCH_SORT_AND_FILTER)
+        ) 
+        avanced_sort_and_filter.click()
+        print("Submodule 'Advanced Sort & Filter' clicked")
