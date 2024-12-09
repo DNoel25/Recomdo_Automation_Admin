@@ -38,3 +38,6 @@ class Locators:
     ASF_SAVE_BUTTON = (By.XPATH, "//button[@id='save_attribute_sort']")
     ASF_SEARCH_TEXT = (By.XPATH, "/html/body/div/div[1]/section[2]/div[2]/div/div/div/div[2]/div[2]/section/div/div[2]/div[2]/div/div[1]/div[1]/input")
     ASF_UNASSIGNED_LIST = (By.XPATH, "/html/body/div/div[1]/section[2]/div[2]/div/div/div/div[2]/div[2]/section/div/div[2]/div[2]/div/div[1]/div[2]/ul")
+    #Locators for Sort By Options
+    ASF_SORTOPTION_SORTBY = (By.XPATH, "/html/body/div/div[1]/section[2]/div[2]/div/div/div/div[3]/div[2]/section/div/div[1]/div[2]/select")
+    
