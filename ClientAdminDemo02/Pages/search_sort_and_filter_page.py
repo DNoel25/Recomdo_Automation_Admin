@@ -194,7 +194,7 @@ class SearchSortAndFilter:
 
                 #Saving the changes
                 self.save_changes() 
-
+            
                 # Optional: Wait for the page to refresh or changes to take effect
                 WebDriverWait(self.driver, 10).until(EC.staleness_of(input_field1)) 
                 # Step 4: Verify the updated value in the input field
@@ -219,50 +219,6 @@ class SearchSortAndFilter:
             logging.error(f"Error during entering '16' in the searched field for '{search_text}': {e}")
             return False  # If an error occurs, return False
 
-    
-    # def is_delete_button_visible_for_price(self):
-    #     """
-    #     Check if the delete button is visible for the 'Price' attribute in the assigned list.
-    #     :return: True if the delete button is visible, False otherwise.
-    #     """
-    #     print("------------")
-    #     print("Checking the 'X' icon is there for price.....")
-    #     # Search for 'Price' attribute in the assigned list
-    #     if self.search_in_assign_box("Price"):
-            
-    #         try:
-    #             # Locate the assigned list elements
-    #             assigned_list = WebDriverWait(self.driver, 10).until(
-    #                 EC.presence_of_all_elements_located((By.CSS_SELECTOR, ".assigned-attributes li.attribute-item"))
-    #             )
-    #             # Iterate through the located list to extract attribute names or perform actions
-    #             for attribute in assigned_list:
-    #                 try:
-    #                     # Find the attribute name within the list item
-    #                     attribute_name_element = attribute.find_element(By.CSS_SELECTOR, "span.attribute-name")
-    #                     attribute_name = attribute_name_element.text.strip()
-
-    #                     # Debug output to verify found attributes
-    #                     print(f"Found attribute: {attribute_name}")
-
-    #                     # Special handling for the 'Price' attribute
-    #                     if attribute_name == "Price":
-    #                         delete_button = attribute.find_elements(By.CSS_SELECTOR, "button.delete-button")
-    #                         if delete_button:
-    #                             print("'Price' attribute has a delete button visible.")
-    #                         else:
-    #                             print("'Price' attribute does not have a delete button.")
-
-    #                 except Exception as e:
-    #                     print(f"Error while processing an attribute: {e}")
-    #         except TimeoutException:
-    #             print("Assigned list could not be loaded.")
-    #             return False
-    #     else:
-    #         print("Price attribute not found in the assigned list.")
-    #         return False
-        
-        # Search for 'Price' attribute in the assigned list
     def is_delete_button_visible_for_price(self):
         """
         Check if the delete button is visible for the 'Price' attribute in the assigned list.
@@ -293,6 +249,7 @@ class SearchSortAndFilter:
             return False
     
     #STARTING THE TEST on SORT BY OPTION FILTER
+    #******************************************
     def select_sort_option_sortby(self, sortOption):
         # Select store view from dropdown 
         sort_option = WebDriverWait(self.driver, 10).until(
@@ -348,16 +305,25 @@ class SearchSortAndFilter:
     def enter_15_in_sortby_searched_field(self, search_text):
         try:
             # Locate the input field for the searched attribute (e.g., 'Age')
+            # input_field = WebDriverWait(self.driver, 10).until(
+            #     EC.visibility_of_element_located((
+            #         By.CSS_SELECTOR, 
+            #         f"li[id='{search_text}'] .number_div input[name='order_number_unassigned']"
+            #     ))
+            # )
+            print("heheheheheheh")
+            print("Here is the problemmmmmmmmmmmmmmmmmm......")
             input_field = WebDriverWait(self.driver, 10).until(
+                
                 EC.visibility_of_element_located((
-                    By.CSS_SELECTOR, 
-                    f"li[id='{search_text}'] .number_div input[name='order_number_unassigned']"
-                ))
+                        By.CSS_SELECTOR,
+                        f"div.number_div span input.order_number_unassigned[name='order_number_unassigned'][type='number'] + span[data-code='{search_text}']"
+                    ))
             )
-            
+            print("ahahahahah2222222")
             # Clear the input field and type '16'
             input_field.clear()
-            input_field.send_keys("15")
+            input_field.send_keys("15") 
             print(f"Entered '15' in the searched field for '{search_text}'.")
             time.sleep(2)
             return True  # Successfully entered '16' in the field
@@ -373,18 +339,18 @@ class SearchSortAndFilter:
             # If not found in unassigned list, search in assigned attributes list
             print(f"Searching for '{search_text}' in the assigned attributes list...")
             assigned_search_field = WebDriverWait(self.driver, 10).until(
-                EC.visibility_of_element_located((By.ID, "search_assigned"))  # ID for the assigned search field
+                EC.visibility_of_element_located((By.ID, "search_sortunassigned"))  # ID for the assigned search field
             )
             assigned_search_field.clear()
             assigned_search_field.send_keys(search_text)
 
             # Wait for the search results to update in the assigned list
             WebDriverWait(self.driver, 10).until(
-                EC.presence_of_all_elements_located((By.CSS_SELECTOR, ".sortable-list.assigned-list .assigned_attribute_one"))
+                EC.presence_of_all_elements_located((By.CSS_SELECTOR, ".sortable-list.sort_unassigned-list"))
             )
 
             # Fetch all filtered items in the assigned list
-            assigned_items = self.driver.find_elements(By.CSS_SELECTOR, ".sortable-list.assigned-list .assigned_attribute_one")
+            assigned_items = self.driver.find_elements(By.CSS_SELECTOR, ".sortable-list.sort_unassigned-list li")
             print(f"Got {len(assigned_items)} filtered items in the assigned attributes list.")
 
             # Verify if the searched text appears in any item of the assigned list
