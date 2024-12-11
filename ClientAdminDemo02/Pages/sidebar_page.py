@@ -9,6 +9,7 @@ class SideNavigationPage:
     def __init__(self, driver):
         self.driver = driver
 
+#Search Results Management Module
     def open_search_results_management(self):
         # Wait for and click on the "Search Results Management" main menu item by indexing
         search_results_management = WebDriverWait(self.driver, 10).until(
@@ -38,3 +39,25 @@ class SideNavigationPage:
         ) 
         avanced_sort_and_filter.click()
         print("Submodule 'Advanced Sort & Filter' clicked")
+
+#Category Management Module
+
+    def open_category_management(self):
+        # Wait for and click on the "Search Results Management" main menu item by indexing
+        category_management = WebDriverWait(self.driver, 10).until(
+            # EC.element_to_be_clickable((By.XPATH, '(//i[contains(@class, "nav-icon fas fa-search")])[1]'))
+            # I pass this using the locatiors class
+            EC.element_to_be_clickable(Locators.CATEGORY_MANAGEMENT_MENU)
+        )
+        category_management.click()
+        print("Main menu item 'Category Management' clicked")
+
+    def open_layered_navigation(self):
+        # Wait for and click on the "Manual Suggestions" submodule item by unique text or order
+        layered_navigation = WebDriverWait(self.driver, 10).until(
+            # EC.element_to_be_clickable((By.XPATH, '//a[contains(text(), "Manual Suggestions")]'))
+            # I pass this using the locatiors class
+            EC.element_to_be_clickable(Locators.LAYERED_NAVIGATION_SUBMODULE)
+        )
+        layered_navigation.click()
+        print("Submodule 'layered_navigation' clicked")

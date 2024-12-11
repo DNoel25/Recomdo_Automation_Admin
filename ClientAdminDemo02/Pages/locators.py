@@ -3,6 +3,7 @@
 from selenium.webdriver.common.by import By
 
 class Locators:
+#Search Results Management Module
     SEARCH_RESULTS_MANAGEMENT_MENU = ((By.XPATH, '(//i[contains(@class, "nav-icon fas fa-search")])[1]'))
     MANUAL_SUGGESTION_SUBMODULE = ((By.XPATH, '//a[contains(text(), "Manual Suggestions")]'))
     # SEARCH_SORT_AND_FILTER = (By.XPATH, '//a[contains(text(), "Advanced Sort & Filter")]')
@@ -41,3 +42,21 @@ class Locators:
     #Locators for Sort By Options
     ASF_SORTOPTION_SORTBY = (By.XPATH, "/html/body/div/div[1]/section[2]/div[2]/div/div/div/div[3]/div[2]/section/div/div[1]/div[2]/select")
     
+#Category Management
+    CATEGORY_MANAGEMENT_MENU = ((By.XPATH, '(//i[contains(@class, "nav-icon fas fa-tasks")])[1]'))
+    LAYERED_NAVIGATION_SUBMODULE = ((By.XPATH, '//a[contains(text(), "Layered Navigation Sorting")]'))
+
+    EXPAND_ALL = ((By.XPATH, '//*[@id="expand_all"]'))
+    COLLAPSE_ALL = ((By.XPATH, '//*[@id="collapse_all"]'))
+    CM_STORE_VIEW_DROPDOWN = (By.XPATH, "//select[@name='store_view_select' and @id='store_view_select']")
+    CM_SORTOPTION_LAYERED = (By.XPATH, "/html/body/div[1]/div[1]/section[2]/div[2]/div/div[2]/div/div/div[2]/div[3]/div[1]/div[2]/select")
+    CM_SAVE_BUTTON = (By.XPATH, "//button[@id='save_category_attribute_sort']")
+    CM_SEARCH_TEXT = (By.XPATH, "/html/body/div[1]/div[1]/section[2]/div[3]/div/div[2]/div/div/div[2]/div[3]/div[2]/div[2]/div/div[1]/input")
+    CM_UNASSIGNED_LIST = (By.XPATH, "/html/body/div/div[1]/section[2]/div[2]/div/div/div/div[2]/div[2]/section/div/div[2]/div[2]/div/div[1]/div[2]/ul")
+    
+    #Locators for Sort By Options
+    ASF_SORTOPTION_SORTBY = (By.XPATH, "/html/body/div/div[1]/section[2]/div[2]/div/div/div/div[3]/div[2]/section/div/div[1]/div[2]/select")
+
+    #Locators for Grid view
+    CM_SHOW_ENTRIES_DROPDOWN = ((By.XPATH, "//select[@id='products-per-page']"))  # Dropdown for entries shown per page
+    # CM_SHOW_ENTRIES_DROPDOWN = ((By.XPATH, "//select[@name='SuggestionTable_length' and @aria-controls='SuggestionTable']"))  # Dropdown for entries shown per page 

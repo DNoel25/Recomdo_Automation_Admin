@@ -4,7 +4,7 @@ import logging
 import time
 import pytest
 from Pages.sidebar_page import SideNavigationPage
-from Pages.manual_suggestions_page import ManualSuggestionsPage
+from Pages.Page_Search_Results_Management.manual_suggestions_page import ManualSuggestionsPage
 from Utils.base import BaseTest
 
 # @pytest.mark.usefixtures("setup")
