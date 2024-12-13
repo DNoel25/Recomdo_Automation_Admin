@@ -60,3 +60,11 @@ class Locators:
     #Locators for Grid view
     CM_SHOW_ENTRIES_DROPDOWN = ((By.XPATH, "//select[@id='products-per-page']"))  # Dropdown for entries shown per page
     # CM_SHOW_ENTRIES_DROPDOWN = ((By.XPATH, "//select[@name='SuggestionTable_length' and @aria-controls='SuggestionTable']"))  # Dropdown for entries shown per page 
+    CM_SAVE_BUTTON_IN_CATEGORY_GRID = (By.XPATH, "//button[@id='save_product_sort']")
+
+
+#Report Management 
+    RM_REPORT_MANAGEMENT_MENU = ((By.XPATH, '(//i[contains(@class, "nav-icon fas fa-book")])[1]')) 
+    RM_SEARCH_TERMS_SUBMODULE = (By.XPATH, '//a[@href="/client-admin/report/search-terms/"]')
+    RM_SHOW_ENTRIES_DROPDOWN = ((By.XPATH, "//select[@name='searchTermsTable_length' and @aria-controls='searchTermsTable']"))  # Dropdown for entries shown per page
+    RM_SEARCH_FIELD = (By.ID, "searchTermsTable_filter")  # Search filter field

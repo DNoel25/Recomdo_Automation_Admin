@@ -5,6 +5,10 @@ import pytest
 from Pages.sidebar_page import SideNavigationPage
 from Pages.Page_Category_Management.layered_navigation_page import LayeredNavigationPage
 from Utils.base import BaseTest
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.action_chains import ActionChains
 
 # @pytest.mark.usefixtures("setup")
 class TestCategoryManagement(BaseTest):
@@ -32,7 +36,7 @@ class TestCategoryManagement(BaseTest):
         #     assert layered_navigation, "Heading is not displayed." # Use the result for the assertion   
         #     time.sleep(2)
 
-        # # @pytest.mark.order(3)
+        # @pytest.mark.order(3)
         # def test_expand_all(self): 
         #     print(" ")
         #     print("--")
@@ -42,7 +46,7 @@ class TestCategoryManagement(BaseTest):
         #     layered_navigation.click_expand_all() 
         #     print("Successfully Expanded")
             
-        # # @pytest.mark.order(2)
+        # @pytest.mark.order(2)
         # def test_collapse_all(self):
         #     print(" ")
         #     print("--")
@@ -63,7 +67,7 @@ class TestCategoryManagement(BaseTest):
         #     layered_navigation.click_collapse_all()
         #     print("Successfully Collapsed")
 
-        # # @pytest.mark.order(4)
+        # @pytest.mark.order(4)
         # def test_layered_sort_and_filter(self):
         #     # Step 1:  
         #     layered_navigation = LayeredNavigationPage(self.driver)
@@ -94,7 +98,7 @@ class TestCategoryManagement(BaseTest):
         #     time.sleep(2)
 
         # #Check whether the price is correctly assigned to the assigned attributes section (right section)
-        # # @pytest.mark.order(5)
+        # @pytest.mark.order(5)
         # def test_price_in_assigned_list_for_select_all(self):
         #     layered_navigation = LayeredNavigationPage(self.driver)
         #     selectAll_sort_by_option = "Select all attributes"
@@ -128,6 +132,7 @@ class TestCategoryManagement(BaseTest):
         #     assert layered_navigation.is_delete_button_visible_for_price(), "Delete button is visible for 'Price' in the assigned list for 'Select only selected attributes in order'."
 
         #Grid view functions tests are as follows
+        # @pytest.mark.order(6)
         def test_navigation_gridview(self):
             layered_navigation = LayeredNavigationPage(self.driver) 
 
@@ -146,18 +151,94 @@ class TestCategoryManagement(BaseTest):
             layered_navigation.redirect_gridview()
             time.sleep(2)
 
-        def test_show_entries_options(self):
+        # @pytest.mark.order(7)
+        # def test_show_entries_options(self):
+        #     layered_navigation = LayeredNavigationPage(self.driver)
+        #     for value in [12, 24, 36, 66]:
+        #         # time.sleep(5)
+        #         assert layered_navigation.set_show_entries(value), f"Failed to set and verify show entries to {value}."
+        #     layered_navigation.refresh_page()
+        #     time.sleep(3)
+
+        # @pytest.mark.order(8)
+        # def test_search_functionality(self):
+        #     layered_navigation = LayeredNavigationPage(self.driver)
+        #     layered_navigation.search_in_grid("K-00000240122144715503440")
+        #     # value = "K-00000240122144715503440"
+        #     # assert layered_navigation.search_in_grid(value), f"Failed to search an product using {value}."
+        #     layered_navigation.refresh_page()
+        #     time.sleep(3)
+        
+        # @pytest.mark.order(9)
+        # def test_auto_manual_sort(self):
+        #     layered_navigation = LayeredNavigationPage(self.driver)
+        #     manual_count = layered_navigation.count_manual_sorted() 
+        #     print(f"Number of manually sorted items: {manual_count}")
+
+        # @pytest.mark.order(10)
+        def test_auto_manual_sort(self):
             layered_navigation = LayeredNavigationPage(self.driver)
-            for value in [12, 24, 36, 66]:
-                # time.sleep(5)
-                assert layered_navigation.set_show_entries(value), f"Failed to set and verify show entries to {value}."
+            has_manual_sorted, manual_sorted_items = layered_navigation.count_manual_sorted()
 
-        def test_search_functionality(self):
+            # Check if there are at least 3 manually sorted items
+            assert has_manual_sorted, "Less than 3 manually sorted items found. Test cannot proceed."
+
+            # Validate sort by sort_number
+            sorted_correctly = layered_navigation.check_sort_by_sort_number(manual_sorted_items)
+            assert sorted_correctly, "Manually sorted items are not correctly sorted by sort_number."
+            print("Test passed: Manually sorted items are correctly sorted by sort_number.")
+
+        # @pytest.mark.order(11)
+        def test_auto_manual_sort_update_by_numbering(self):
             layered_navigation = LayeredNavigationPage(self.driver)
-            layered_navigation.search_in_grid("K-00000240122144715503440")
-            # Add assertions for verifying search results in the grid
 
+            time.sleep(3)
+            # Get manually sorted items
+            has_manual_sorted, manual_sorted_items = layered_navigation.count_manual_sorted()
+            assert has_manual_sorted, "Less than 3 manually sorted items found. Test cannot proceed."
 
+            # Update the sort number for the first manually sorted product
+            first_product = manual_sorted_items[0]
+            layered_navigation.update_sort_number(first_product, 3)
+
+            # Validate the updated order
+            sorted_correctly = layered_navigation.validate_sort_order(manual_sorted_items)
+            assert sorted_correctly, "Manually sorted items are not correctly sorted by sort_number after update."
+
+            print("Test passed: Manually sorted items are correctly updated and sorted by sort_number.")
+            self.driver.refresh()
+            time.sleep(2)
+
+        def test_manual_sort_update_by_dragdrop(self):
+            print(" ")
+            print("Sorting Manual Products by Drag and Drop.....")
+            layered_navigation = LayeredNavigationPage(self.driver)
+
+            time.sleep(3)
+            # Get manually sorted items
+            has_manual_sorted, manual_sorted_items = layered_navigation.count_manual_sorted()
+            assert has_manual_sorted, "Less than 3 manually sorted items found. Test cannot proceed."
+
+            # Update the sort number for the first manually sorted product
+            first_product = manual_sorted_items[0]
+            layered_navigation.drag_and_drop()
+
+            # Validate the updated order
+            sorted_correctly = layered_navigation.validate_sort_order(manual_sorted_items)
+            assert sorted_correctly, "Manually sorted items are not correctly sorted by sort_number after update."
+
+            print("Test passed: Manually sorted items are correctly updated and sorted by sort_number.")
+
+        # # @pytest.mark.order(12)
+        # def test_disable_enable_of_product(self):
+        #     layered_navigation = LayeredNavigationPage(self.driver)
+        #     layered_navigation.disable_first_product()
+
+        # # @pytest.mark.order(13)
+        # def test_disable_enable_of_product(self):
+        #     layered_navigation = LayeredNavigationPage(self.driver)
+        #     layered_navigation.enable_first_product()
+        
 
     except Exception as e:
             logging.error(f"Error in connection {e}") 

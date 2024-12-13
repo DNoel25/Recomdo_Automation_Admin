@@ -61,3 +61,21 @@ class SideNavigationPage:
         )
         layered_navigation.click()
         print("Submodule 'layered_navigation' clicked")
+
+#Report Management
+
+    def open_report_management(self):
+        report_management = WebDriverWait(self.driver, 10).until(
+            EC.element_to_be_clickable(Locators.RM_REPORT_MANAGEMENT_MENU)
+        )
+        report_management.click()
+        print("Main Module 'Report Management' clicked ")
+    
+    def open_search_terms(self):
+        search_terms = WebDriverWait(self.driver, 10).until(
+            EC.element_to_be_clickable(Locators.RM_SEARCH_TERMS_SUBMODULE)
+        )
+        search_terms.click()
+        print("Submodule 'Search Terms' clicked")
+
+    

@@ -6,7 +6,8 @@ from selenium.webdriver.support import expected_conditions as EC
 from Pages.locators import Locators   
 import logging
 import time
-
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.action_chains import ActionChains
 
 class LayeredNavigationPage:
     def __init__(self, driver):
@@ -341,8 +342,7 @@ class LayeredNavigationPage:
 
             # Verify if the number of grid items is equal to the selected dropdown value or less
             assert actual_count == int(value) or actual_count < int(value), f"Expected up to {value} entries, but found {actual_count}."
-            # Refresh the current page
-            # self.driver.refresh()
+            
             # time.sleept(1)
             
         except Exception as e:
@@ -350,13 +350,18 @@ class LayeredNavigationPage:
             return False
         return True
 
-    def search_in_grid(self, sku):
+
+    def refresh_page(self):
+        # Refresh the current page
+        self.driver.refresh()
+
+    def search_in_grid(self, sku): 
         try:
-            # Locate and clear the search field, then enter the SKU
+            # Locate and clear the search field, then enter the SKU 
             search_field = WebDriverWait(self.driver, 10).until(
                 EC.visibility_of_element_located((By.XPATH, '//*[@id="product-search"]'))
-            )
-            search_field.clear()
+            ) 
+            search_field.clear() 
             search_field.send_keys(sku)
             print(f"Searching for SKU '{sku}' in the grid...")
             time.sleep(5)
@@ -364,7 +369,8 @@ class LayeredNavigationPage:
             WebDriverWait(self.driver, 10).until(
                 lambda driver: len(driver.find_elements(By.XPATH, "//div[contains(@class, 'grid-item')]")) > 0
             )
-
+            
+            time.sleep(2)
             # Locate the product grid items
             grid_items = self.driver.find_elements(By.XPATH, "//div[contains(@class, 'grid-item')]")
             print(f"Found {len(grid_items)} items in the grid after search.")
@@ -379,16 +385,391 @@ class LayeredNavigationPage:
                 # Check if the SKU matches the searched SKU
                 if sku.lower() == grid_sku.lower():
                     print(f"Match found: '{grid_sku}' matches searched SKU '{sku}'")
-                    time.sleept(4)
+                    # Get the current value of the input field
+                    current_value = search_field.get_attribute("value")
+                    # Use backspace to clear each character
+                    for _ in range(len(current_value)):
+                        print("Clearing character...")
+                        search_field.send_keys(Keys.BACKSPACE) 
+                    time.sleep(3) 
                     return True  # Return True if a match is found
 
             # If no matching SKU is found
             print(f"No match found for SKU '{sku}' in the grid.")
             return False
 
+             
+
         except Exception as e:
             logging.error(f"Error during search in grid: {e}")
             return False
+   
+    # def count_manual_sorted(self):
+    #     try:
+    #         print(" ")
+    #         print("-------")
+    #         print("Checking the no of manual sorting in the item list...")
+    #         # Wait for all grid items to load
+    #         grid_items = WebDriverWait(self.driver, 10).until(
+    #             EC.presence_of_all_elements_located((By.XPATH, "//div[contains(@class, 'grid-item')]"))
+    #         )
+
+    #         manual_sorted_items = []  # Store manually sorted items
+    #         print(f"Total grid items found: {len(grid_items)}")
+
+    #         for item in grid_items:
+    #             try:
+    #                 # Check if the grid item has the class 'manual_sort'
+    #                 item_class = item.get_attribute("class")
+    #                 if "manual_sort" in item_class:
+    #                     manual_sorted_items.append(item)
+    #                     print(f"Manually sorted item found: {item.get_attribute('data-id')}")
+
+    #             except Exception as inner_e:
+    #                 logging.warning(f"Could not check sorting status for an item: {inner_e}")
+    #                 continue
+
+    #         manual_sorted_count = len(manual_sorted_items)
+    #         print(f"Total manually sorted items: {manual_sorted_count}")
+
+    #         # Validate the condition
+    #         if manual_sorted_count < 3:
+    #             print("Less than 3 manually sorted items found. Cannot proceed with sort_number check.")
+    #             return False, manual_sorted_items
+
+    #         print("At least 3 manually sorted items found. Ready for sort_number check.")
+    #         return True, manual_sorted_items
+
+    #     except Exception as e:
+    #         logging.error(f"Error while counting manually sorted items: {e}")
+    #         return False, []
+
+    #this functio to use in the "count_manual_sorted" function to whether if that has less than three products to make three new producsts to manual sort
+    def ensure_minimum_manual_sort(self):
+        
+        """
+        Ensure there are at least three manually sorted products in the grid.
+        If there are fewer than three, convert other products to manual sort.
+        
+        :return: The updated list of manually sorted product elements.
+        """
+        try:
+            print("1")
+            # Find all products in the grid
+            product_elements = self.driver.find_elements(By.XPATH, "//div[contains(@class, 'grid-item')]")
+            print("2")
+            # Filter manually sorted products
+            manually_sorted_products = [
+                product for product in product_elements
+                if "manual_sort" in product.get_attribute("class")
+            ]
+            print("3")
+            # Check if there are at least 3 manually sorted products
+            if len(manually_sorted_products) >= 3:
+                print("4")
+                logging.info("There are already 3 or more manually sorted products.")
+                return manually_sorted_products
+            print("5")
+            # Find additional products to convert to manual sort
+            additional_needed = 3 - len(manually_sorted_products)
+            logging.info(f"Adding {additional_needed} products to manual sort.")
+            print("6")
+            # Find automatic sorted products to convert
+            auto_sorted_products = [
+                product for product in product_elements
+                if "automatic_sort" in product.get_attribute("class")
+            ]
+            print("7")
+            for i in range(additional_needed):
+                print("8")
+                if i < len(auto_sorted_products):
+                    print("9")
+                    # # Locate the manual-auto checkbox for the product
+                    # checkbox = auto_sorted_products[i].find_element(By.XPATH, ".//input[@class='auto_manual_check_box']")
+                    # Locate the manual-auto checkbox for the product
+                    checkbox = auto_sorted_products[i].find_element(By.XPATH, ".//div[@class='sort_option_toggle']//input[@class='auto_manual_check_box']")
+
+                    print("10")
+                    # Click the checkbox to convert to manual sort
+                    checkbox.click()
+                    logging.info(f"Converted product with data-id: {auto_sorted_products[i].get_attribute('data-id')} to manual sort.")
+                    print("11")
+                    # Wait for the change to apply
+                    time.sleep(2)  # Replace with explicit wait if needed
+
+            # Re-fetch the manually sorted products
+            manually_sorted_products = [
+                product for product in self.driver.find_elements(By.XPATH, "//div[contains(@class, 'grid-item')]")
+                if "manual_sort" in product.get_attribute("class")
+            ]
+
+            return manually_sorted_products
+
+        except Exception as e:
+            logging.error(f"Error ensuring minimum manual sort: {e}")
+            raise
+
+    def count_manual_sorted(self):
+        try:
+            print(" ")
+            print("-------")
+            print("Checking the number of manually sorted items in the grid list...")
+            # Wait for all grid items to load
+            grid_items = WebDriverWait(self.driver, 10).until(
+                EC.presence_of_all_elements_located((By.XPATH, "//div[contains(@class, 'grid-item')]"))
+            )
+            time.sleep(5)
+            manual_sorted_items = []  # Store manually sorted items
+            print(f"Total grid items found: {len(grid_items)}")
+
+            for item in grid_items:
+                try:
+                    # Check if the grid item has the class 'manual_sort'
+                    item_class = item.get_attribute("class")
+                    if "manual_sort" in item_class:
+                        manual_sorted_items.append(item)
+                        print(f"Manually sorted item found: {item.get_attribute('data-id')}")
+
+                except Exception as inner_e:
+                    logging.warning(f"Could not check sorting status for an item: {inner_e}")
+                    continue
+
+            manual_sorted_count = len(manual_sorted_items)
+            print(f"Total manually sorted items: {manual_sorted_count}")
+
+            
+            # Validate the condition
+            if manual_sorted_count < 3:
+                print("Less than 3 manually sorted items found. Triggering function to add more manual sorted items...")
+                # Trigger ensure_minimum_manual_sort to make more products manually sorted
+                # manual_sorted_items = self.ensure_minimum_manual_sort()
+
+                # Revalidate the count after making the changes
+                manual_sorted_count = len(manual_sorted_items)
+                if manual_sorted_count < 3:
+                    print("Failed to ensure at least 3 manually sorted items. Exiting.")
+                    return False, manual_sorted_items
+
+            print("At least 3 manually sorted items found. Ready for sort_number or drag and drop check.")
+            return True, manual_sorted_items
+
+        except Exception as e:
+            logging.error(f"Error while counting manually sorted items: {e}")
+            return False, []
+
+
+    def check_sort_by_sort_number(self, manual_sorted_items):
+        print(" ")
+        print("-------")
+        print("Verifying the sorted items are sorted as per Ascending...")
+        try:
+            sort_numbers = []
+
+            for item in manual_sorted_items:
+                try:
+                    # Locate the sort_number input field and retrieve its value
+                    sort_number = item.find_element(By.XPATH, ".//input[@class='sort_number']").get_attribute("value")
+                    sort_numbers.append(int(sort_number))
+                    print(f"Sort number for item {item.get_attribute('data-id')}: {sort_number}")
+
+                except Exception as e:
+                    logging.warning(f"Could not retrieve sort_number for item: {e}")
+                    continue
+
+            # Check if sort_numbers are in ascending order
+            if sort_numbers == sorted(sort_numbers):
+                print("Items are sorted by sort_number in ascending order.")
+                return True
+            else:
+                print("Items are not sorted by sort_number in ascending order.")
+                return False
+
+        except Exception as e:
+            logging.error(f"Error during sort_number validation: {e}")
+            return False
+
+    def update_sort_number(self, product_element, new_sort_number):
+        """
+        Update the sort number of a manually sorted product.
+
+        :param product_element: WebElement of the product to update.
+        :param new_sort_number: The new sort number to set.
+        :return: None
+        """
+        try:
+            # Locate the sort number input field within the product element
+            sort_input = product_element.find_element(By.XPATH, ".//input[@class='sort_number']")
+            
+            # Clear and update the sort number
+            sort_input.clear()
+            sort_input.send_keys(str(new_sort_number))
+            print(f"Updated sort number to {new_sort_number} for product with data-id: {product_element.get_attribute('data-id')}")
+
+            # Trigger save/update action
+            save_button = WebDriverWait(self.driver, 10).until(
+            EC.element_to_be_clickable(Locators.CM_SAVE_BUTTON_IN_CATEGORY_GRID)
+            )
+            save_button.click() 
+            # Optional: Wait for the grid to update
+            time.sleep(3)  # Replace with an explicit wait if applicable
+        except Exception as e:
+            logging.error(f"Error updating sort number: {e}")
+            raise
+        
+    def validate_sort_order(self, manual_sorted_items):
+        """
+        Validate that manually sorted products are in the correct order based on sort_number.
+
+        :param manual_sorted_items: List of WebElement representing manually sorted items.
+        :return: True if sorted correctly, otherwise False
+        """
+        try:
+            # Re-fetch the grid items to ensure updated data
+            sorted_products = self.driver.find_elements(By.XPATH, "//div[@class='grid-item manually_sort']")
+            
+            # Extract sort numbers
+            sort_numbers = [
+                int(product.find_element(By.XPATH, ".//input[@class='sort_number']").get_attribute('value'))
+                for product in sorted_products
+            ]
+            print(f"Current sort numbers: {sort_numbers}")
+
+            # Check if the sort numbers are in ascending order
+            if sort_numbers == sorted(sort_numbers):
+                print("Products are sorted correctly by sort_number.")
+                return True
+            else:
+                print("Products are NOT sorted correctly by sort_number.")
+                return False
+        except Exception as e:
+            logging.error(f"Error validating sort order: {e}")
+            return False
+ 
+    def disable_first_product(self):
+        try:
+            print("Disabling the first product in the list...")
+
+            # Locate the first product container in the grid
+            first_product = WebDriverWait(self.driver, 10).until(
+                EC.presence_of_element_located((By.XPATH, "(//div[contains(@class, 'grid-item')])[1]"))
+            )
+            print("First product found.")
+
+            # Locate the disabling icon within the first product container
+            disable_icon = first_product.find_element(By.XPATH, ".//span[@class='sort_box']/i[contains(@class, 'visible_hidden_select')]")
+            print("Disabling icon found.")
+
+            # Click the disable icon using ActionChains
+            ActionChains(self.driver).move_to_element(disable_icon).click().perform()
+            print("Clicked disable icon.")
+
+            save_button = WebDriverWait(self.driver, 10).until(
+            EC.element_to_be_clickable(Locators.CM_SAVE_BUTTON_IN_CATEGORY_GRID)
+            )
+            save_button.click()
+            time.sleep(2)
+            # Optionally, use execute_script if you need to run JavaScript
+            # For example, to simulate a click or manipulate elements using JavaScript
+            # self.driver.execute_script("document.querySelector('.disable_button').click();")
+
+            # Validate that the product class has changed to include 'disabled-item'
+            WebDriverWait(self.driver, 5).until(
+                EC.presence_of_element_located((By.XPATH, "(//div[contains(@class, 'grid-item')])[1][contains(@class, 'disabled-item')]"))
+            )
+
+            print("First product successfully disabled.")
+            return True
+
+        except Exception as e:
+            print(f"Failed to disable the first product. Error: {e}")
+            return False
+    
+    def enable_first_product(self):
+        try:
+            print("Enabling the disabled first product in the list...")
+
+            # Locate the first product container in the grid
+            first_product = WebDriverWait(self.driver, 10).until(
+                EC.presence_of_element_located((By.XPATH, "(//div[contains(@class, 'grid-item')])[1]"))
+            )
+            print("First product found.")
+
+            # Locate the disabling icon within the first product container
+            disable_icon = first_product.find_element(By.XPATH, ".//span[@class='sort_box']/i[contains(@class, 'visible_hidden_select')]")
+            print("Disabling icon found.")
+
+            # Click the disable icon using ActionChains
+            ActionChains(self.driver).move_to_element(disable_icon).click().perform()
+            print("Clicked enabled icon.")
+
+            save_button = WebDriverWait(self.driver, 10).until(
+            EC.element_to_be_clickable(Locators.CM_SAVE_BUTTON_IN_CATEGORY_GRID)
+            )
+            save_button.click()
+            time.sleep(2)
+            # Optionally, use execute_script if you need to run JavaScript
+            # For example, to simulate a click or manipulate elements using JavaScript
+            # self.driver.execute_script("document.querySelector('.disable_button').click();")
+
+            # Validate that the product class has changed to include 'disabled-item'
+            WebDriverWait(self.driver, 5).until(
+                EC.presence_of_element_located((By.XPATH, "(//div[contains(@class, 'grid-item')])[1][contains(@class, 'disabled-item')]"))
+            )
+
+            print("First product successfully enabled again.")
+            return True
+
+        except Exception as e:
+            print(f"Failed to disable the first product. Error: {e}")
+            return False
+            
+    def drag_and_drop(self):
+            try:
+                # try:
+                # Wait for the first manually sorted product
+                self.driver.refresh()
+                time.sleep(2)
+                first_product = WebDriverWait(self.driver, 10).until(
+                    EC.presence_of_element_located((By.XPATH, "(//div[contains(@class, 'grid-item manual_sort')])[1]"))
+                )
+                print("First product found.")
+
+                # Wait for another product (for example, the second product) to drop the first product on
+                second_product = WebDriverWait(self.driver, 10).until(
+                    EC.presence_of_element_located((By.XPATH, "(//div[contains(@class, 'grid-item manual_sort')])[2]"))
+                )
+                print("Second product found.")
+
+                # Create ActionChains to simulate the drag and drop action
+                action = ActionChains(self.driver)
+
+                # Drag the first product and drop it on the second product
+                action.click_and_hold(first_product).move_to_element(second_product).release().perform()
+                print("Dragged and dropped the first product to the second position.")
+
+                # Trigger save/update action
+                save_button = WebDriverWait(self.driver, 10).until(
+                EC.element_to_be_clickable(Locators.CM_SAVE_BUTTON_IN_CATEGORY_GRID)
+                )
+                save_button.click() 
+                # Optional: Wait for the grid to update
+                time.sleep(3)  # Replace with an explicit wait if applicable
+
+                # Verify that the order has changed (you may need to check the order visually or by asserting element locations)
+                updated_first_product = self.driver.find_element(By.XPATH, "(//div[contains(@class, 'grid-item manual_sort')])[1]")
+                updated_second_product = self.driver.find_element(By.XPATH, "(//div[contains(@class, 'grid-item manual_sort')])[2]")
+                
+                if updated_first_product != first_product and updated_second_product != second_product:
+                    print("Products successfully reordered!")
+                    return True
+                else:
+                    print("Products not reordered.")
+                    return False
+
+            except Exception as e:
+                print(f"Error during drag and drop test: {e}")
+                return False    
+
 
 
 
