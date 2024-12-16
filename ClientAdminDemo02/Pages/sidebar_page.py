@@ -9,6 +9,16 @@ class SideNavigationPage:
     def __init__(self, driver):
         self.driver = driver
 
+#Dashboard module 
+    def open_dashboard_menu(self):
+        # Wait for and click on the "Search Results Management" main menu item by indexing
+        dashboard_module = WebDriverWait(self.driver, 10).until(
+            # EC.element_to_be_clickable((By.XPATH, '(//i[contains(@class, "nav-icon fas fa-search")])[1]'))
+            # I pass this using the locatiors class
+            EC.element_to_be_clickable(Locators.DASHBOARD_MODULE_MENU)
+        )
+        dashboard_module.click() 
+
 #Search Results Management Module
     def open_search_results_management(self):
         # Wait for and click on the "Search Results Management" main menu item by indexing
@@ -78,4 +88,24 @@ class SideNavigationPage:
         search_terms.click()
         print("Submodule 'Search Terms' clicked")
 
+    def open_search_term_pages(self):
+        search_terms = WebDriverWait(self.driver, 10).until(
+            EC.element_to_be_clickable(Locators.RMST_SEARCH_TERM_PAGES_SUBMODULE)
+        )
+        search_terms.click()
+        print("Submodule 'Search Terms' clicked")
+    
+    def open_attribute_page(self):
+        search_terms = WebDriverWait(self.driver, 10).until(
+            EC.element_to_be_clickable(Locators.RMAP_ATTRIBUTE_PAGE_SUBMODULE)
+        )
+        search_terms.click()
+        print("Submodule 'Search Terms' clicked")
+
+    def open_ai_suggestions_page(self):
+        search_terms = WebDriverWait(self.driver, 10).until(
+            EC.element_to_be_clickable(Locators.RMAI_AI_SUGGESTIONS_SUBMODULE)
+        )
+        search_terms.click()
+        print("Submodule 'Search Terms' clicked")
     

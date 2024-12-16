@@ -3,6 +3,9 @@
 from selenium.webdriver.common.by import By
 
 class Locators:
+
+#Dashboard module
+    DASHBOARD_MODULE_MENU = ((By.XPATH, '(//i[contains(@class, "nav-icon fas fa-tachometer-alt")])[1]'))
 #Search Results Management Module
     SEARCH_RESULTS_MANAGEMENT_MENU = ((By.XPATH, '(//i[contains(@class, "nav-icon fas fa-search")])[1]'))
     MANUAL_SUGGESTION_SUBMODULE = ((By.XPATH, '//a[contains(text(), "Manual Suggestions")]'))
@@ -65,6 +68,56 @@ class Locators:
 
 #Report Management 
     RM_REPORT_MANAGEMENT_MENU = ((By.XPATH, '(//i[contains(@class, "nav-icon fas fa-book")])[1]')) 
+    #-----
     RM_SEARCH_TERMS_SUBMODULE = (By.XPATH, '//a[@href="/client-admin/report/search-terms/"]')
-    RM_SHOW_ENTRIES_DROPDOWN = ((By.XPATH, "//select[@name='searchTermsTable_length' and @aria-controls='searchTermsTable']"))  # Dropdown for entries shown per page
-    RM_SEARCH_FIELD = (By.ID, "searchTermsTable_filter")  # Search filter field
+    
+    RMST_SHOW_ENTRIES_DROPDOWN = ((By.XPATH, "//select[@name='searchTermsTable_length' and @aria-controls='searchTermsTable']"))  # Dropdown for entries shown per page
+    RMST_SEARCH_FIELD = (By.ID, "searchTermsTable_filter")  # Search filter field
+    RMST_PAGINATION_CONTAINER = (By.ID, "searchTermsTable_paginate")
+    RMST_PREVIOUS_BUTTON = (By.ID, "searchTermsTable_previous")
+    RMST_NEXT_BUTTON = (By.ID, "searchTermsTable_next")
+    RMST_PAGE_NUMBERS = (By.CSS_SELECTOR, ".paginate_button:not(.next):not(.previous)")
+    RMST_LAST_PAGE_NUMBER = (By.XPATH,
+        '//a[contains(@class, "paginate_button") and not(contains(@aria-controls, "previous")) and not(contains(@aria-controls, "next"))][last()]')
+    RMST_FILTER_BUTTON = (By.ID, "filter_section_view") 
+
+    #-----
+    RMST_SEARCH_TERM_PAGES_SUBMODULE = (By.XPATH, '//a[@href="/client-admin/report/seo-pages/"]')
+
+    RMSTP_SHOW_ENTRIES_DROPDOWN = ((By.XPATH, "//select[@name='seoSearchCountTable_length' and @aria-controls='seoSearchCountTable']"))  # Dropdown for entries shown per page
+    # RMSTP_SEARCH_FIELD = (By.type, "search")  # Search filter field
+    RMSTP_PAGINATION_CONTAINER = (By.ID, "seoSearchCountTable_paginate")
+    RMSTP_PREVIOUS_BUTTON = (By.ID, "seoSearchCountTable_previous")
+    RMSTP_NEXT_BUTTON = (By.ID, "seoSearchCountTable_next")
+    RMSTP_PAGE_NUMBERS = (By.CSS_SELECTOR, ".paginate_button:not(.next):not(.previous)")
+    RMSTP_LAST_PAGE_NUMBER = (By.XPATH,
+        '//a[contains(@class, "paginate_button") and not(contains(@aria-controls, "previous")) and not(contains(@aria-controls, "next"))][last()]')
+    RMSTP_FILTER_BUTTON = (By.ID, "filter_section_view")
+
+
+    #-----
+    RMAP_ATTRIBUTE_PAGE_SUBMODULE = (By.XPATH, '//a[@href="/client-admin/report/attribute-pages/"]')
+
+    RMAP_SHOW_ENTRIES_DROPDOWN = ((By.XPATH, "//select[@name='attributeSearchCountTable_length' and @aria-controls='attributeSearchCountTable']"))  # Dropdown for entries shown per page
+    # RMSTP_SEARCH_FIELD = (By.type, "search")  # Search filter field
+    RMAP_PAGINATION_CONTAINER = (By.ID, "attributeSearchCountTable_paginate")
+    RMAP_PREVIOUS_BUTTON = (By.ID, "attributeSearchCountTable_previous")
+    RMAP_NEXT_BUTTON = (By.ID, "attributeSearchCountTable_next")
+    RMAP_PAGE_NUMBERS = (By.CSS_SELECTOR, ".paginate_button:not(.next):not(.previous)")
+    RMAP_LAST_PAGE_NUMBER = (By.XPATH,  
+        '//a[contains(@class, "paginate_button") and not(contains(@aria-controls, "previous")) and not(contains(@aria-controls, "next"))][last()]')
+    RMAP_FILTER_BUTTON = (By.ID, "filter_section_view")
+
+
+    #-----
+    RMAI_AI_SUGGESTIONS_SUBMODULE = (By.XPATH, '//a[@href="/client-admin/report/suggestions/"]')
+
+    RMAI_SHOW_ENTRIES_DROPDOWN = ((By.XPATH, "//select[@name='suggestionsResultsTable_length' and @aria-controls='suggestionsResultsTable']"))  # Dropdown for entries shown per page
+    # RMSTP_SEARCH_FIELD = (By.type, "search")  # Search filter field
+    RMAI_PAGINATION_CONTAINER = (By.ID, "suggestionsResultsTable_paginate")
+    RMAI_PREVIOUS_BUTTON = (By.ID, "suggestionsResultsTable_previous")
+    RMAI_NEXT_BUTTON = (By.ID, "suggestionsResultsTable_next")
+    RMAI_PAGE_NUMBERS = (By.CSS_SELECTOR, ".paginate_button:not(.next):not(.previous)")
+    RMAI_LAST_PAGE_NUMBER = (By.XPATH,  
+        '//a[contains(@class, "paginate_button") and not(contains(@aria-controls, "previous")) and not(contains(@aria-controls, "next"))][last()]')
+    RMAI_FILTER_BUTTON = (By.ID, "filter_section_view")
