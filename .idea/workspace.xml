@@ -1,12 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="cbabafe0-5395-4c13-afb7-f45ae980814c" name="Changes" comment="" />
+    <list default="true" id="cbabafe0-5395-4c13-afb7-f45ae980814c" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientAdminDemo02/Pages/locators.py" beforeDir="false" afterPath="$PROJECT_DIR$/ClientAdminDemo02/Pages/locators.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientAdminDemo02/Pages/sidebar_page.py" beforeDir="false" afterPath="$PROJECT_DIR$/ClientAdminDemo02/Pages/sidebar_page.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientAdminDemo02/Tests/Test_Report_Management/test_reports_attribute_page.py" beforeDir="false" afterPath="$PROJECT_DIR$/ClientAdminDemo02/Tests/Test_Report_Management/test_reports_attribute_page.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientAdminDemo02/Utils/base.py" beforeDir="false" afterPath="$PROJECT_DIR$/ClientAdminDemo02/Utils/base.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;DNoel25&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/DNoel25/Recomdo_Automation.git&quot;,
+    &quot;accountId&quot;: &quot;7ab07f74-3343-46e7-b44f-3085546e9777&quot;
+  }
+}</component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
   &quot;associatedIndex&quot;: 3
@@ -19,15 +43,18 @@
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/neosolax/Desktop/Automation_For_Client_Admin&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-1d06a55b98c1-0b3e54e931b4-JavaScript-PY-241.17011.127" />
-        <option value="bundled-python-sdk-48aec45f0201-7e9c3bbb6e34-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-241.17011.127" />
+        <option value="bundled-python-sdk-1b1018131e27-aa17d162503b-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-243.22562.180" />
       </set>
     </attachedChunks>
   </component>

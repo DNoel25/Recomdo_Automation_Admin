@@ -108,4 +108,18 @@ class SideNavigationPage:
         )
         search_terms.click()
         print("Submodule 'Search Terms' clicked")
+
+#Search Term Pages
+    def open_search_term_pages_main(self):
+        report_management = WebDriverWait(self.driver, 10).until(
+            EC.element_to_be_clickable(Locators.ST_SEARCH_TERM_PAGES_MENU)
+        )
+        report_management.click()
+        print("Main Module 'Search Term Pages' clicked ")
     
+    def open_all_pages(self):
+        search_terms = WebDriverWait(self.driver, 10).until(
+            EC.element_to_be_clickable(Locators.STAP_ALL_PAGES_SUBMODULE)
+        )
+        search_terms.click()
+        print("Submodule 'All Pages' clicked")

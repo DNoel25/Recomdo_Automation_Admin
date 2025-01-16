@@ -8,7 +8,7 @@ from Pages.Page_Reports_Management.attribute_page import AttributePages
 from Utils.base import BaseTest
 
 # @pytest.mark.usefixtures("setup")
-class TestSearchTerms(BaseTest):
+class TestAttribute(BaseTest):
 
     try:
         @classmethod

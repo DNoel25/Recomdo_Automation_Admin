@@ -16,7 +16,7 @@ class BaseTest:
 
         # Perform login once
         login_page = LoginPage(cls.driver)
-        login_page.login("NewKiddoz", "jtys12@")
+        login_page.login("NewKiddoz", "Ratkiller400@")
         print("Login successful and setup complete.")
 
     @classmethod

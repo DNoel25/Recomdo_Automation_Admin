@@ -121,3 +121,26 @@ class Locators:
     RMAI_LAST_PAGE_NUMBER = (By.XPATH,  
         '//a[contains(@class, "paginate_button") and not(contains(@aria-controls, "previous")) and not(contains(@aria-controls, "next"))][last()]')
     RMAI_FILTER_BUTTON = (By.ID, "filter_section_view")
+
+#Search Term Pages 
+    ST_SEARCH_TERM_PAGES_MENU = ((By.XPATH, '(//i[contains(@class, "nav-icon fa-solid fa-sitemap")])[1]')) 
+    #-----
+    STAP_ALL_PAGES_SUBMODULE = (By.XPATH, '//a[@href="/client-admin/seo/index/"]')
+    
+    STAP_SHOW_ENTRIES_DROPDOWN = ((By.XPATH, "//select[@name='allPageTable_length' and @aria-controls='allPageTable']"))  # Dropdown for entries shown per page
+    STAP_SEARCH_FIELD = (By.ID, "allPageTable_filter")  # Search filter field
+    STAP_PAGINATION_CONTAINER = (By.ID, "allPageTable_paginate")
+    STAP_PREVIOUS_BUTTON = (By.ID, "allPageTable_previous")
+    STAP_NEXT_BUTTON = (By.ID, "allPageTable_next")
+    STAP_PAGE_NUMBERS = (By.CSS_SELECTOR, ".paginate_button:not(.next):not(.previous)")
+    STAP_LAST_PAGE_NUMBER = (By.XPATH,
+        '//a[contains(@class, "paginate_button") and not(contains(@aria-controls, "previous")) and not(contains(@aria-controls, "next"))][last()]')
+    STAP_FILTER_BUTTON = (By.ID, "filter_section_view") 
+
+    #-----
+    #Adding new search term pages
+    ST_CREATE_NEW_BUTTON = (By.CSS_SELECTOR, "a.back-button.view")
+    STCN_ENABLE_SEO_CHECKBOX = (By.ID, "is_active")
+    STCN_TITLE_INPUT = (By.ID, "category_name")
+    STCN_KEYWORD_INPUT = (By.ID, "search_keyword")
+    STCN_STORE_VIEW_DROPDOWN = (By.ID, "store_view")
